@@ -1,0 +1,102 @@
+1. Define the base path 
+
+    <base href="/">
+
+2. Import RouterModule
+
+    Use RouterModule.forRoot() for app routes (one time only!)
+
+    @NgModule({
+    imports: [
+        .........,
+        RouterModule.forRoot(routes),
+        ......],
+    exports: [RouterModule]
+    })
+
+    use RouterModule.forChild() for feature modules
+
+3. Configuring routes
+
+    when configuring routes each route definition requires a path 
+    which identifies the url segments for the route
+
+    No leading slash
+
+4. Placing the template 
+
+    identifies where to display the routed components template
+    <router-outlet></router-outlet>
+
+
+5. Activating a route 
+
+    routerLink directive
+
+    <a [routerLink]="['/welcome']">welcome</a>
+
+6. html5 vs hashed based url
+
+7. Setting up feature routing module
+
+- ng g m routingAndNavigation/products --routing
+- be sure to use RouterModule.forChild()
+- configure the routes
+
+8. Navigate vs navigatebyurl
+with navigate you can pass route parameters
+this.route.navigate(['/welcome'])
+
+with navigateByUrl you can pass only routeURL 
+it will replace everything with the given url
+this.route.navigateByUrl('/welcome')
+
+9. route parameters
+
+two types of parameters
+required parameters
+optional parameters or
+query parameters
+
+- required parameters
+
+    /products/:id
+    <a [routerLink] = "['/products',product.id]"></a>
+    or
+    this.route.navigate(['/products',this.product.id])
+
+
+    /products/:id/edit
+    <a [routerLink] = "['/products',product.id,'edit']"></a>
+
+    => Reading required route parameters
+
+        - activated component should read and use those route parameters 
+        - activated route is a service which reads the route information
+        - activated routes provides the acess to the set of url segments, 
+        route parameters, query parameters, resolver data and more 
+
+        constructor(private route: ActivatedRoute)
+
+        -there are two ways to read routeParameters
+        
+        1. const id = +this.route.snapshot.paramMap.get('id');
+        the snapshot provides the initial state of the route
+        since url params is string we are adding a + sign to cast it to a number 
+        2. this.route.paramMap.subscribe(
+            params => {
+                const id = +params.get('id');
+            }
+            )
+        the observable keeps a watch on route parameters and 
+        recieves a notification everytime the parameters change.
+
+- Optional parameters
+
+  {path: 'products', component: ProductLsitComponent}  
+  [routerLink] = "['/products', {name: productName, code: productCode, availablity: true}]"
+
+  => Reading optional parameters
+    
+    const id = +this.route.snapshot.paramMap.get('name');
+    const id = +this.route.snapshot.paramMap.get('code');

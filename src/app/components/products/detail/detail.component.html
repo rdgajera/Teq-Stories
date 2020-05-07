@@ -1,0 +1,17 @@
+<button class="btn btn-primary" routerLink="/products">List</button>
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">userId</th>
+        <th scope="col">title</th>
+        <th scope="col">body</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">{{data?.userId}}</th>
+        <td>{{data?.title}}</td>
+        <td>{{data?.body}}</td>
+      </tr>
+    </tbody>
+  </table>
